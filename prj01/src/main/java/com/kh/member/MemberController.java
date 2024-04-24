@@ -16,11 +16,15 @@ public class MemberController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+//		req : request 객체 
+//		getParameter : key값, key값을 이용해서 value를 꺼내온다.
 		String memberId = req.getParameter("memberId");
 		String memberPwd = req.getParameter("memberPwd");
 		
+//		객체 만들기
 		MemberVo vo = new MemberVo(memberId, memberPwd);
 		
+//		resp : 응답이랑 관련된 내용을 담아주는 객체
 		resp.getWriter().write("<html>");
 		resp.getWriter().write("<head>");
 		resp.getWriter().write("<style>");
