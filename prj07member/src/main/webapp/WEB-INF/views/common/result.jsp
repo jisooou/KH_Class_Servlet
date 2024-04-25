@@ -7,14 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-	<h1>홈페이지</h1>
-	
-	<hr>
-	
-	<a href="http://127.0.0.1:8888/app07/member/join">회원가입</a>
-	<br>
-	<a href="http://127.0.0.1:8888/app07/member/login">로그인</a>
-
+	<h1>로그인 성공 !</h1>
 </body>
 </html>
