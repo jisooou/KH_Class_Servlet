@@ -1,0 +1,19 @@
+#nav{
+	margin: 0 auto;
+	width: 60vw;
+	height: 50px;
+
+	display: flex;
+	justify-content: space-evenly;
+
+	background-color: black;
+	color: white;
+	box-sizing: border-box;
+
+	font-size: 2em;
+}
+
+a, a:visited{
+	color: white;
+	text-decoration: none;
+}
