@@ -48,7 +48,8 @@ public class MemberLoginController extends HttpServlet{
 				session.setAttribute("alertMsg", "로그인 성공~~!!");
 				session.setAttribute("loginMemberVo", loginMemberVo);
 			}else {
-				req.setAttribute("resultMsg", "로그인 실패 ...!");			
+//				req.setAttribute("resultMsg", "로그인 실패 ...!");		
+				session.setAttribute("alertMsg", "로그인 실패 ...!");
 			}
 //			req.getRequestDispatcher("/WEB-INF/views/common/result.jsp").forward(req, resp);	
 			resp.sendRedirect("/app/home");

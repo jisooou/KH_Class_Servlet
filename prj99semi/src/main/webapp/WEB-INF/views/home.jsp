@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -9,12 +10,14 @@
 <script src="/app/resources/js/home.js"></script>
 
 <script>
-	<% if(session.getAttribute("alertMsg") != null){ %>
-		alert("${alertMsg}");		
-	<% } %>
+
+	<c:if test="${!empty alertMsg}">
+		alert("${alertMsg}");
+	</c:if>
+	
 </script>
 
-<% session.removeAttribute("alertMsg"); %>
+<c:remove var="alertMsg" scope="session"/>
 
 </head>
 <body>
@@ -26,7 +29,7 @@
             <div>로고</div>
             <div>
             	
-            	<% if(session.getAttribute("loginMemberVo") != null){ %>
+            	<c:if test="${loginMemberVo != null}">
             		<div>
             			<span>프로필</span>
             			<br>
@@ -35,13 +38,15 @@
             			<span>닉네임 : ${sessionScope.loginMemberVo.nick} </span>
             			<br>
             			<button onclick="location.href = '/app/member/logout'">로그아웃</button>  
-            		</div>          	
-            	<% }else{ %>
-            		<div>
+            		</div>        
+				</c:if>
+				<c:if test="${loginMemberVo == null}">
+					<div>
             			<button onclick="location.href='/app/member/join'">회원가입</button>
             			<button onclick="location.href='/app/member/login'">로그인</button>
             		</div>  	
-            	<% } %>
+				</c:if>
+            	
             </div>
         </header>
         <nav>
