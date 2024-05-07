@@ -12,7 +12,7 @@ public class BoardVo {
 	private String delYn;
 	
 	public BoardVo() {
-		
+		super();
 	}
 
 	public BoardVo(String no, String title, String content, String categoryNo, String writerNo, String hit,

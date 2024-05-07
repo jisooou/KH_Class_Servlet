@@ -66,4 +66,39 @@ public class BoardDao {
 		return voList;
 	}
 
+	public BoardVo getBoardByNo(Connection conn, String no) throws Exception {
+		
+//		SQL
+		String sql = "SELECT * FROM BOARD WHERE NO = ? AND DEL_YN = 'N'";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, no);
+		ResultSet rs = pstmt.executeQuery();
+		
+		BoardVo vo = null;
+		if(rs.next()) {
+//			String no = rs.getString("NO");
+			String title = rs.getString("TITLE");
+			String content = rs.getString("CONTENT");
+			String categoryNo = rs.getString("CATEGORY_NO");
+			String writerNo = rs.getString("WRITER_NO");
+			String hit = rs.getString("HIT");
+			String createDate = rs.getString("CREATE_DATE");
+			String delYn = rs.getString("DEL_YN");
+			
+			vo = new BoardVo();
+			vo.setTitle(title);
+			vo.setContent(content);
+			vo.setCategoryNo(categoryNo);
+			vo.setWriterNo(writerNo);
+			vo.setHit(hit);
+			vo.setCreateDate(createDate);
+			vo.setDelYn(delYn);
+		}
+		
+		
+		close(rs);
+		close(pstmt);
+		return vo;
+	}
+
 }

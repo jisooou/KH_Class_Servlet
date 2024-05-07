@@ -61,4 +61,20 @@ public class BoardService {
 		
 	}
 
+
+
+	public BoardVo getBoardByNo(String no) throws Exception{
+		
+//		비즈니스 로직 - 처리할 거 없음
+
+//		DAO 호출
+		Connection conn = getConnection();
+		BoardVo vo = dao.getBoardByNo(conn, no);
+		
+		close(conn);
+		
+		return vo; 
+		
+	}
+
 }
