@@ -4,30 +4,42 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>KH홈페이지</title>
+
+<%@ include file="/WEB-INF/views/layout/util.jsp" %>
+
 </head>
 <body>
 
-	<h1>게시글 작성</h1>
+ 	<%@ include file="/WEB-INF/views/layout/left-aside.jsp" %>
+    <div id="wrap">
+        <%@ include file="/WEB-INF/views/layout/header.jsp" %>
+		<%@ include file="/WEB-INF/views/layout/nav.jsp" %>
+        <main>
+           
+           	<h1>게시글 작성</h1>
 
-    <form action="/app/board/insert" method="post">
-
-        <input type="text" name="title" placeholder="제목">
-        <select name="category">
-            <option value="1">여행</option>
-            <option value="2">노래</option>
-            <option value="3">개발</option>
-            <option value="4">자유</option>
-            <option value="5">독서</option>
-        </select>
-        <br><br>
-        <textarea name="content" placeholder="내용"></textarea>
-        <br><br>
-        <input type="file" name="f">
-        <br><br>
-        <input type="submit" value="제출하기">
-        <br>
-    </form>
+		    <form action="/app/board/insert" method="post">
+		
+		        <input type="text" name="title" placeholder="제목">
+		        <select name="category">
+		        	<c:forEach var="cvo" items="${categoryVoList}">
+		        		<option value="${cvo.no}">${cvo.name}</option>
+		        	</c:forEach>
+		        </select>
+		        <br><br>
+		        <textarea name="content" placeholder="내용"></textarea>
+		        <br><br>
+		        <input type="file" name="f">
+		        <br><br>
+		        <input type="submit" value="제출하기">
+		        <br>
+		    </form>
+           
+        </main>
+        <%@ include file="/WEB-INF/views/layout/footer.jsp" %>
+    </div>
+   <%@ include file="/WEB-INF/views/layout/right-aside.jsp" %>
 
 </body>
 </html>

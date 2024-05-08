@@ -8,6 +8,8 @@
 
 <%@ include file="/WEB-INF/views/layout/util.jsp" %>
 
+<link rel="stylesheet" href="/app/resources/css/board/detail.css">
+
 </head>
 <body>
 
@@ -19,15 +21,25 @@
             <h1 align="center">게시글 상세조회</h1>
             
             <div>제목 : ${requestScope.vo.title}</div>
-            <div>작성자 : ${requestScope.vo.writerNo}</div>
+            <div>작성자 : ${requestScope.vo.nick}</div>
             <div>조회수 : ${requestScope.vo.hit}</div>
+            <div>카데고리이름 : ${requestScope.vo.categoryName}</div>
             <div>작성일시 : ${requestScope.vo.createDate}</div>
             <div>내용 : ${requestScope.vo.content}</div>
- 
+            <br>
+            <c:if test="${requestScope.vo.writerNo eq sessionScope.loginMemberVo.no}">
+            	<button onclick="location.href='/app/board/edit?no=${vo.no}'">수정</button>
+            	<button onclick="location.href='/app/board/delete?no=${vo.no}'">삭제</button>
+            </c:if>
+
+            <br><br><br><br>
+			<a href="/app/board/list"><input class="detailButton" type="button" value="게시글 목록으로"></a>
+            
         </main>
         <%@ include file="/WEB-INF/views/layout/footer.jsp" %>
     </div>
    <%@ include file="/WEB-INF/views/layout/right-aside.jsp" %>
 
+   
 </body>
 </html>

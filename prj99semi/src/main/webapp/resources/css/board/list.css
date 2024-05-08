@@ -1,6 +1,20 @@
-main{
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: center;
+main {
+   display: flex;
+   flex-direction: column;
+   justify-content: start;
+   align-items: center;
+}
+
+main table > tbody > tr:hover {
+   background-color: rgb(40, 156, 218);
+   color: white;
+   cursor:pointer;
+}
+
+.homeButton{
+   color: black;
+   background-color: rgb(85, 233, 125);
+   width: 150px;
+   height: 60px;
+   border-radius: 30%;
 }

@@ -24,7 +24,7 @@
         <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 		<%@ include file="/WEB-INF/views/layout/nav.jsp" %>
         <main>
-           
+
            	<h1>게시글 목록</h1>
 
 			<table border="1">
@@ -40,14 +40,23 @@
 				
 					<c:forEach items="${voList}" var="vo">
 						<tr>
-							<td>${vo.title}</td>
-							<td>${vo.writerNo}</td>
-							<td>${vo.categoryNo}</td>
+							<td><a href="/app/board/detail?no=${vo.no}&writerNo=${vo.writerNo}">${vo.title}</a></td>
+							<td>${vo.nick}</td>
+							<td>${vo.categoryName}</td>
 							<td>${vo.hit}</td> 
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
+			
+			<c:if test="${sessionScope.loginMemberVo ne null}">
+				<div> 
+					<button onclick="location.href='/app/board/insert'">게시글 작성</button>
+				</div>
+			</c:if>
+			
+			 <br><br>
+			<a href="/app/home"><input class="homeButton" type="button" value="홈으로"></a>
            
         </main>
         <%@ include file="/WEB-INF/views/layout/footer.jsp" %>
