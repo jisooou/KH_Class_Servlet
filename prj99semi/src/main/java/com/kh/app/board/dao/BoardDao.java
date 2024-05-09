@@ -121,7 +121,7 @@ public class BoardDao {
 	}
 
 	
-	
+//	카데고리 목록 이름
 	public List<CategoryVo> getCategoryVoList(Connection conn) throws Exception {
 //		SQL
 		String sql = "SELECT * FROM CATEGORY ORDER BY NO DESC";

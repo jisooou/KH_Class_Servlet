@@ -106,6 +106,26 @@ public class MemberService {
 		
 		return result;
 	}
+
+//	아이디 중복 검사
+	public boolean checkIdDup(String id) throws Exception {
+//		비즈니스 로직 - 처리할 거 없음
+		
+//		DAO 호출
+		Connection conn = getConnection();
+		int result = dao.checkIdDup(conn, id);
+		
+		if(result == 1) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		
+		close(conn);
+		
+		return result == 0;
+		
+	}
 	
 	
 //	회원가입

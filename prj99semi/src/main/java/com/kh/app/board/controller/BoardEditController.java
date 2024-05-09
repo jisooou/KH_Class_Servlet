@@ -20,9 +20,12 @@ public class BoardEditController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
+//			데이터 꺼내기
 			String no = req.getParameter("no");
-			
+
 			BoardService bs = new BoardService();
+			
+//			본인이 로그인시 조회수 증가 x
 			boolean isSelf = true; 
 			BoardVo vo = bs.getBoardByNo(no, isSelf);
 			List<CategoryVo> categoryVoList = bs.getCategoryVoList();
