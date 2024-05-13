@@ -30,6 +30,7 @@
 			<table border="1">
 				<thead>
 					<tr>
+						<th>번호</th>
 						<th>제목</th>
 						<th>작성자</th>
 						<th>카테고리</th>
@@ -40,6 +41,7 @@
 				
 					<c:forEach items="${voList}" var="vo">
 						<tr>
+							<td>${vo.no}</td>
 							<td><a href="/app/board/detail?no=${vo.no}&writerNo=${vo.writerNo}">${vo.title}</a></td>
 							<td>${vo.nick}</td>
 							<td>${vo.categoryName}</td>
@@ -54,6 +56,23 @@
 					<button onclick="location.href='/app/board/insert'">게시글 작성</button>
 				</div>
 			</c:if>
+			
+			<div id="page-area">
+				<c:if test="${pvo.currentPage > 1}">
+					<a href="/app/board/list?pno=${pvo.currentPage-1}">이전</a>				
+				</c:if>
+				<c:forEach begin="${pvo.startPage}" end="${pvo.endPage}" var="x">
+					<c:if test="${pvo.currentPage == x}">
+						<strong>${x}</strong>					
+					</c:if>
+					<c:if test="${pvo.currentPage != x}">
+						<a href="/app/board/list?pno=${x}">${x}</a>					
+					</c:if>
+				</c:forEach>
+				<c:if test="${pvo.currentPage < pvo.maxPage}">
+					<a href="/app/board/list?pno=${pvo.currentPage+1}">다음</a>				
+				</c:if>
+			</div>
 			
 			 <br><br>
 			<a href="/app/home"><input class="homeButton" type="button" value="홈으로"></a>

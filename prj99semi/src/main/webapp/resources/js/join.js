@@ -18,7 +18,7 @@ function checkDup(){
     },
     error : function(){ console.log("통신 실패..."); },
   };
-
+  
   // ajax 실행시켜주는 코드
   $.ajax( obj );
 }

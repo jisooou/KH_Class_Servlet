@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.kh.app.board.vo.BoardVo;
 import com.kh.app.board.vo.CategoryVo;
+import com.kh.app.board.vo.PageVo;
 
 public class BoardDao {
 
@@ -31,11 +32,13 @@ public class BoardDao {
 	}
 
 //	게시글 목록 조회
-	public List<BoardVo> selectBoardList(Connection conn) throws Exception {
+	public List<BoardVo> selectBoardList(Connection conn, PageVo pvo) throws Exception {
 		
 //		SQL
-		String sql = "SELECT B.NO , B.TITLE , B.CONTENT , B.CATEGORY_NO , C.NAME , B.WRITER_NO , M.NICK , B.HIT , B.CREATE_DATE FROM BOARD B JOIN MEMBER M ON B.WRITER_NO = M.NO JOIN CATEGORY C ON B.CATEGORY_NO = C.NO AND B.DEL_YN = 'N' ORDER BY B.NO DESC";
+		String sql = "SELECT * FROM ( SELECT ROWNUM AS RNUM , T.* FROM ( SELECT * FROM BOARD B JOIN CATEGORY C ON B.CATEGORY_NO = C.NO JOIN MEMBER M ON B.WRITER_NO = M.NO WHERE B.DEL_YN = 'N' ORDER BY B.NO DESC ) T ) WHERE RNUM BETWEEN ? AND ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, pvo.getStartNum());
+		pstmt.setInt(2, pvo.getEndNum());
 		ResultSet rs = pstmt.executeQuery();
 		
 		List<BoardVo> voList = new ArrayList<BoardVo>();
@@ -171,6 +174,22 @@ public class BoardDao {
 		close(pstmt);
 		
 		return result;
+	}
+
+	public int getBoardCnt(Connection conn) throws Exception{
+//		SQL
+		String sql = "SELECT COUNT(NO) FROM BOARD WHERE DEL_YN = 'N'";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+		int cnt = 0; 
+		if(rs.next()) {
+			cnt = rs.getInt(1);
+		}
+		
+		close(rs);
+		close(pstmt);
+		
+		return cnt;
 	}
 
 }

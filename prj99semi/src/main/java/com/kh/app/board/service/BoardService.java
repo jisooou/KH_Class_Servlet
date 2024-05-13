@@ -1,13 +1,18 @@
 package com.kh.app.board.service;
 
+import static com.kh.app.db.JDBCTemplate.close;
+import static com.kh.app.db.JDBCTemplate.commit;
+import static com.kh.app.db.JDBCTemplate.getConnection;
+import static com.kh.app.db.JDBCTemplate.rollback;
+
 import java.sql.Connection;
 import java.util.List;
 
 import com.kh.app.board.dao.BoardDao;
 import com.kh.app.board.vo.BoardVo;
 import com.kh.app.board.vo.CategoryVo;
+import com.kh.app.board.vo.PageVo;
 import com.kh.app.db.JDBCTemplate;
-import static com.kh.app.db.JDBCTemplate.*;
 
 
 public class BoardService {
@@ -47,13 +52,13 @@ public class BoardService {
 
 
 
-	public List<BoardVo> selectBoardList() throws Exception{
+	public List<BoardVo> selectBoardList(PageVo pvo) throws Exception{
 		
 //		비즈니스 로직 - 생략
 		
 //		DAO 호출
 		Connection conn = getConnection();
-		List<BoardVo> voList = dao.selectBoardList(conn);
+		List<BoardVo> voList = dao.selectBoardList(conn, pvo);
 		
 //		트랜잭션 처리해줄 거 없음	
 		close(conn);
@@ -161,6 +166,20 @@ public class BoardService {
 		
 		return result;
 		
+	}
+
+
+
+	public int getBoardCnt() throws Exception {
+//		비즈니스 로직 - x
+		
+//		SQL
+		Connection conn = getConnection();
+		int cnt = dao.getBoardCnt(conn);
+		
+		close(conn);
+		
+		return cnt;
 	}
 
 }
