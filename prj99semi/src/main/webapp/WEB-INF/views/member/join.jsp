@@ -21,7 +21,7 @@
             
             <h1>회원가입</h1>
 
-            <form action="/app/member/join" method="post">
+            <form action="/app/member/join" method="post" enctype="multipart/form-data">
                 <input type="text" name="id" placeholder="아이디">
                 <button type="button" onclick="checkDup();">중복검사</button>
                 <br>
@@ -30,6 +30,8 @@
                 <input type="password" name="pwd2" placeholder="비밀번호 확인">
                 <br>
                 <input type="text" name="nick" placeholder="닉네임">
+                <br>
+                <label>프로필사진</label> <input type="file" name="profile">
                 <br>
                 <input type="submit" value="회원가입">
             </form>

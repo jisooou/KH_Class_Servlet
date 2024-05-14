@@ -10,13 +10,14 @@ public class MemberVo {
 	private String delYn;
 	private String enrollDate;
 	private String modifyDate;
+	private String profile;
 	
 	public MemberVo() {
 		
 	}
-
+	
 	public MemberVo(String no, String id, String pwd, String pwd2, String nick, String delYn, String enrollDate,
-			String modifyDate) {
+			String modifyDate, String profile) {
 		super();
 		this.no = no;
 		this.id = id;
@@ -26,7 +27,10 @@ public class MemberVo {
 		this.delYn = delYn;
 		this.enrollDate = enrollDate;
 		this.modifyDate = modifyDate;
+		this.profile = profile;
 	}
+
+
 
 	public String getNo() {
 		return no;
@@ -92,12 +96,19 @@ public class MemberVo {
 		this.modifyDate = modifyDate;
 	}
 
+	public String getProfile() {
+		return profile;
+	}
+
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
+
 	@Override
 	public String toString() {
 		return "MemberVo [no=" + no + ", id=" + id + ", pwd=" + pwd + ", pwd2=" + pwd2 + ", nick=" + nick + ", delYn="
-				+ delYn + ", enrollDate=" + enrollDate + ", modifyDate=" + modifyDate + "]";
+				+ delYn + ", enrollDate=" + enrollDate + ", modifyDate=" + modifyDate + ", profile=" + profile + "]";
 	}
-
 	
 
 }
