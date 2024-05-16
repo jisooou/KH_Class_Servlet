@@ -7,10 +7,13 @@
             	
             	<c:if test="${loginMemberVo != null}">
             		<div>
-            			<span>프로필</span>
-            			<br>
-            			<span>아이디 : ${sessionScope.loginMemberVo.id} </span>
-            			<br>
+            			<a download href="/app/resources/upload/${loginMemberVo.profile}">프로필사진 다운로드 받기</a>
+            			<img 
+            				width="100px"
+            				height="100px"
+            				alt="프로필사진" 
+            				src="/app/resources/upload/${loginMemberVo.profile}"
+            			>
             			<span>닉네임 : ${sessionScope.loginMemberVo.nick} </span>
             			<br>
             			<button onclick="location.href = '/app/member/logout'">로그아웃</button>  

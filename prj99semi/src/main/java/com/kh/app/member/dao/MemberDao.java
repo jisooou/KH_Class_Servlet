@@ -44,6 +44,7 @@ public class MemberDao {
 	         String delYn = rs.getString("DEL_YN");
 	         String enrollDate = rs.getString("ENROLL_DATE");
 	         String modifyDate = rs.getString("MODIFY_DATE");
+	         String profile = rs.getString("PROFILE");
 	         
 	         loginMemberVo = new MemberVo();
 	         loginMemberVo.setNo(no);
@@ -53,6 +54,7 @@ public class MemberDao {
 	         loginMemberVo.setDelYn(delYn);
 	         loginMemberVo.setEnrollDate(enrollDate);
 	         loginMemberVo.setModifyDate(modifyDate);
+	         loginMemberVo.setProfile(profile);
 	      }
 	      
 	      
