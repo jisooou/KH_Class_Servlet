@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.util.List;
 
 import com.kh.app.board.dao.BoardDao;
+import com.kh.app.board.vo.AttachmentVo;
 import com.kh.app.board.vo.BoardVo;
 import com.kh.app.board.vo.CategoryVo;
 import com.kh.app.board.vo.PageVo;
@@ -18,6 +19,7 @@ import com.kh.app.db.JDBCTemplate;
 public class BoardService {
 	
 	private final BoardDao dao;
+	private Object attVo;
 	
 	public BoardService() {
 		dao = new BoardDao();
@@ -25,7 +27,7 @@ public class BoardService {
 
 	
 	
-	public int insert(BoardVo vo) throws Exception{
+	public int insert(BoardVo vo, List<AttachmentVo> attVoList) throws Exception{
 //		비즈니스로직
 		if(vo.getTitle().contains("ㅆ")) {
 			throw new Exception("욕하지 마세요-제목");
@@ -37,17 +39,23 @@ public class BoardService {
 		
 		
 //		DAO 호출
+	
 		Connection conn = JDBCTemplate.getConnection();
 		int result = dao.insert(conn, vo);
 		
-		if(result == 1) {
+		int attResult = 1;
+		if(attVoList.size() > 0) {
+			attResult = dao.insertBoardAttachment(conn, attVoList);
+		}
+		
+		if(result * attResult > 1) {
 			JDBCTemplate.commit(conn);
 		}else {
 			JDBCTemplate.rollback(conn);
 		}
 		JDBCTemplate.close(conn);
 		
-		return result;
+		return result * attResult;
 	}
 
 
@@ -180,6 +188,20 @@ public class BoardService {
 		close(conn);
 		
 		return cnt;
+	}
+
+
+
+	public List<AttachmentVo> getAttachment(String no) throws Exception{
+//		비즈니스 로직
+		
+//		SQL, DAO 호출
+		Connection conn = getConnection();
+		List<AttachmentVo> attVoList = dao.getAttachment(conn, no);
+		
+		close(conn);
+		
+		return attVoList; 
 	}
 
 }

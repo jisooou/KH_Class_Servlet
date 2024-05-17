@@ -26,6 +26,11 @@
             <div>카데고리이름 : ${requestScope.vo.categoryName}</div>
             <div>작성일시 : ${requestScope.vo.createDate}</div>
             <div>내용 : ${requestScope.vo.content}</div>
+            
+            <c:forEach items="${attVoList}" var="x">
+	            <img width="100px" height="100px" alt="${x.originName}" src="/app/resources/upload/${x.changeName}">        
+            </c:forEach>
+           
             <br>
             <c:if test="${requestScope.vo.writerNo eq sessionScope.loginMemberVo.no}">
             	<button onclick="location.href='/app/board/edit?no=${vo.no}'">수정</button>

@@ -8,11 +8,14 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.kh.app.board.vo.AttachmentVo;
 import com.kh.app.board.vo.BoardVo;
 import com.kh.app.board.vo.CategoryVo;
 import com.kh.app.board.vo.PageVo;
 
 public class BoardDao {
+
+	private AttachmentVo attVo;
 
 	public int insert(Connection conn, BoardVo vo) throws Exception{
 		
@@ -26,7 +29,7 @@ public class BoardDao {
 		
 		int result = pstmt.executeUpdate();
 		
-		close(conn);
+		close(pstmt);
 		
 		return result;
 	}
@@ -190,6 +193,54 @@ public class BoardDao {
 		close(pstmt);
 		
 		return cnt;
+	}
+
+	public int insertBoardAttachment(Connection conn, List<AttachmentVo> attVoList) throws Exception{
+//		SQL
+//		String sql = "INSERT INTO BOARD_ATTACHMENT(NO, REF_NO, ORIGIN_NAME, CHANGE_NAME) VALUES (SEQ_BOARD_ATTACHMENT.NEXTVAL, SEQ_BOARD.CURRVAL, ?, ?)";
+		
+		String sql = "INSERT ALL";
+		for (AttachmentVo attVo : attVoList) {
+			sql += " INTO BOARD_ATTACHMENT(NO, REF_NO, ORIGIN_NAME, CHANGE_NAME) VALUES ((SELECT FN_GET_BOARD_ATTACHMENT_SEQ_NEXTVAL FROM DUAL), SEQ_BOARD.CURRVAL, '" + attVo.getOriginName() + "', '" + attVo.getChangeName() + "')";	
+		}
+		sql += "SELECT * FROM DUAL";
+		
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		int result = pstmt.executeUpdate();
+		
+		close(pstmt);
+		
+		return result;
+	}
+
+	public List<AttachmentVo> getAttachment(Connection conn, String no) throws Exception {
+//	SQL
+	String sql = "SELECT * FROM BOARD_ATTACHMENT WHERE REF_NO = ? AND DEL_YN = 'N'";
+	PreparedStatement pstmt = conn.prepareStatement(sql);
+	pstmt.setString(1, no);	
+	ResultSet rs = pstmt.executeQuery();
+	
+	List<AttachmentVo> attVoList = new ArrayList<AttachmentVo>();
+	while(rs.next()) {
+//		String no = rs.getString("NO");
+//		String ref_no = rs.getString("REF_NO");
+
+		String originName = rs.getString("ORIGIN_NAME");
+		String changeName = rs.getString("CHANGE_NAME");
+//		String uploadDate= rs.getString("UPLOAD_DATE");
+		
+		AttachmentVo attVo = new AttachmentVo();
+		attVo.setChangeName(changeName);
+		attVo.setOriginName(originName);
+		
+		attVoList.add(attVo);
+	}
+	
+	close(rs);
+	close(pstmt);
+	
+	return attVoList; 
+		
 	}
 
 }

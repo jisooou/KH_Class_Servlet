@@ -19,7 +19,7 @@
            
            	<h1>게시글 작성</h1>
 
-		    <form action="/app/board/insert" method="post">
+		    <form action="/app/board/insert" method="post" enctype="multipart/form-data">
 		
 		        <input type="text" name="title" placeholder="제목">
 		        <select name="category">
@@ -30,7 +30,7 @@
 		        <br><br>
 		        <textarea name="content" placeholder="내용"></textarea>
 		        <br><br>
-		        <input type="file" name="f">
+		        <input type="file" name="f" multiple>
 		        <br><br>
 		        <input type="submit" value="제출하기">
 		        <br>
