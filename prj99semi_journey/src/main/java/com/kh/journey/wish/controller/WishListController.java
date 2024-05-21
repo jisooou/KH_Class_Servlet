@@ -8,7 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.kh.journey.member.vo.MemberVo;
 import com.kh.journey.wish.service.WishService;
 import com.kh.journey.wish.vo.WishVo;
 
@@ -26,11 +28,16 @@ public class WishListController extends HttpServlet{
 
 		try {
 			
-//			데이터 꺼내기 
-			int listCount = ws.getBoardCnt();
+			HttpSession session = req.getSession();
+            MemberVo loginMemberVo = (MemberVo) session.getAttribute("loginMemberVo");
+            if (loginMemberVo == null) {
+                resp.sendRedirect("/journey/member/login");
+                return;
+            }
+            String memberNo = loginMemberVo.getNo();
 			
-//			복잡한 작업
-			List<WishVo> voList = ws.selectBoardList();
+//			데이터 꺼내기 
+            List<WishVo> voList = ws.selectWishList(memberNo);
 			
 //			결과 	
 			req.setAttribute("voList", voList);			
@@ -40,10 +47,8 @@ public class WishListController extends HttpServlet{
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 			req.setAttribute("errMsg", e.getMessage());
-			req.getRequestDispatcher("/WEB-INF/views/common/error.jsp").forward(req, resp);
-			
+			req.getRequestDispatcher("/WEB-INF/views/common/error.jsp").forward(req, resp);	
 		}
-		
 	}
 	
 	@Override

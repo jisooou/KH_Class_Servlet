@@ -42,31 +42,40 @@ public class WishService {
 
 	}
 
+	
+	public List<WishVo> selectWishList(String memberNo) throws Exception{
 
-	public int getBoardCnt() throws Exception{
-//		비즈니스 로직 - 일단 없음
-		
-//		SQL
+// 		비즈니스 로직 - x
+
+// 		Dao 호출
 		Connection conn = getConnection();
-		int cnt = dao.getWishCnt(conn);
+		List<WishVo> wishList = dao.selectWishList(conn, memberNo);
 		
+	//	트랜잭션 처리해줄 거 없음	
 		close(conn);
 		
-		return cnt;
+		return wishList; 
+		
 	}
 
 
-//	public List<WishVo> selectBoardList() throws Exception {
-////		비즈니스 로직 -
-//		
-////		DAO 호출
-//		Connection conn = getConnection();
-//		List<WishVo> voList = dao.selectWishList(conn);
-//		
-////		트랜잭션 처리해줄 거 없음	
-//		close(conn);
-//		
-//		return voList; 
-//	}
+	public int delete(WishVo wishVo) throws Exception{
+		
+//		비즈니스 로직
+		
+//		DAO 호출
+		Connection conn = getConnection();
+		int result = dao.delete(conn, wishVo);
+		
+		if(result == 1) {
+			commit(conn);
+		}else {
+			rollback(conn);
+			throw new Exception("게시글 삭제 예외 발생...");
+		}
+		close(conn);
+		
+		return result;
+	}
 
 }
