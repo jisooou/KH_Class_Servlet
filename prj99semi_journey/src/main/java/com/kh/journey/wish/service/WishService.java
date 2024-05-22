@@ -71,11 +71,11 @@ public class WishService {
 			commit(conn);
 		}else {
 			rollback(conn);
-			throw new Exception("게시글 삭제 예외 발생...");
+			throw new Exception("게시글 삭제 중에 예외 발생...");
 		}
 		close(conn);
 		
 		return result;
 	}
-
+	
 }
