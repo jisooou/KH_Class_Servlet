@@ -77,5 +77,5 @@ public class WishService {
 		
 		return result;
 	}
-	
+
 }

@@ -30,7 +30,6 @@ public class WishDao {
 
 	public List<WishVo> selectWishList(Connection conn, String memberNo) throws Exception{
 		
-//		SQL
 		String sql = "SELECT * FROM WISH_LIST WHERE MEM_NO = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, memberNo);
@@ -66,5 +65,7 @@ public class WishDao {
         
         return result;
     }
+
+
 
 }
