@@ -8,6 +8,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+
 import com.kh.app.board.vo.AttachmentVo;
 import com.kh.app.board.vo.BoardVo;
 import com.kh.app.board.vo.CategoryVo;
@@ -17,21 +19,25 @@ public class BoardDao {
 
 	private AttachmentVo attVo;
 
-	public int insert(Connection conn, BoardVo vo) throws Exception{
+	public int insert(SqlSession ss, BoardVo vo) throws Exception{
+		System.out.println("dao insert called...");
+		System.out.println("dao > vo : " + vo);
 		
-//		SQL
-		String sql = "INSERT INTO BOARD(NO, TITLE, CONTENT, CATEGORY_NO, WRITER_NO) VALUES(SEQ_BOARD.NEXTVAL, ?, ?, ?, ?)";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, vo.getTitle());
-		pstmt.setString(2, vo.getContent());
-		pstmt.setString(3, vo.getCategoryNo());
-		pstmt.setString(4, vo.getWriterNo());
+		return ss.insert("BoardMapper.insert", vo);
 		
-		int result = pstmt.executeUpdate();
-		
-		close(pstmt);
-		
-		return result;
+////		SQL
+//		String sql = "INSERT INTO BOARD(NO, TITLE, CONTENT, CATEGORY_NO, WRITER_NO) VALUES(SEQ_BOARD.NEXTVAL, ?, ?, ?, ?)";
+//		PreparedStatement pstmt = conn.prepareStatement(sql);
+//		pstmt.setString(1, vo.getTitle());
+//		pstmt.setString(2, vo.getContent());
+//		pstmt.setString(3, vo.getCategoryNo());
+//		pstmt.setString(4, vo.getWriterNo());
+//		
+//		int result = pstmt.executeUpdate();
+//		
+//		close(pstmt);
+//		
+//		return result;
 	}
 
 //	게시글 목록 조회
@@ -195,22 +201,25 @@ public class BoardDao {
 		return cnt;
 	}
 
-	public int insertBoardAttachment(Connection conn, List<AttachmentVo> attVoList) throws Exception{
+	public int insertBoardAttachment(SqlSession ss, List<AttachmentVo> attVoList) throws Exception{
+		System.out.println("dao > attVoList : " + attVoList);
+		return ss.insert("BoardMapper.insertBoardAttachment", attVoList);
+		
 //		SQL
 //		String sql = "INSERT INTO BOARD_ATTACHMENT(NO, REF_NO, ORIGIN_NAME, CHANGE_NAME) VALUES (SEQ_BOARD_ATTACHMENT.NEXTVAL, SEQ_BOARD.CURRVAL, ?, ?)";
-		
-		String sql = "INSERT ALL";
-		for (AttachmentVo attVo : attVoList) {
-			sql += " INTO BOARD_ATTACHMENT(NO, REF_NO, ORIGIN_NAME, CHANGE_NAME) VALUES ((SELECT FN_GET_BOARD_ATTACHMENT_SEQ_NEXTVAL FROM DUAL), SEQ_BOARD.CURRVAL, '" + attVo.getOriginName() + "', '" + attVo.getChangeName() + "')";	
-		}
-		sql += "SELECT * FROM DUAL";
-		
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		int result = pstmt.executeUpdate();
-		
-		close(pstmt);
-		
-		return result;
+//		
+//		String sql = "INSERT ALL";
+//		for (AttachmentVo attVo : attVoList) {
+//			sql += " INTO BOARD_ATTACHMENT(NO, REF_NO, ORIGIN_NAME, CHANGE_NAME) VALUES ((SELECT FN_GET_BOARD_ATTACHMENT_SEQ_NEXTVAL FROM DUAL), SEQ_BOARD.CURRVAL, '" + attVo.getOriginName() + "', '" + attVo.getChangeName() + "')";	
+//		}
+//		sql += "SELECT * FROM DUAL";
+//		
+//		PreparedStatement pstmt = conn.prepareStatement(sql);
+//		int result = pstmt.executeUpdate();
+//		
+//		close(pstmt);
+//		
+//		return result;
 	}
 
 	public List<AttachmentVo> getAttachment(Connection conn, String no) throws Exception {
@@ -241,6 +250,26 @@ public class BoardDao {
 	
 	return attVoList; 
 		
+	}
+	
+	
+	public int delete(SqlSession ss, String[] noArr ) throws Exception{
+		return ss.update("BoardMapper.deleteByNo", noArr);
+		
+////		SQL
+//		String sql = "UPDATE BOARD SET DEL_YN = 'Y' WHERE NO IN (";
+//		for(int i = 0; i<noArr.length; i++) {
+//			sql += noArr[i];
+//			if(i < noArr.length-1) {
+//				sql += ",";
+//			}
+//		}
+//		sql += ")";
+//		
+//		PreparedStatement pstmt = conn.prepareStatement(sql);
+//		int result = pstmt.executeUpdate();
+//		close(pstmt);
+//		return result;
 	}
 
 }

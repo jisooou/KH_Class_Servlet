@@ -51,7 +51,6 @@ public class BoardInsertController extends HttpServlet{
 	
 	
 //	게시글 작성
-	@SuppressWarnings("resource")
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
@@ -97,9 +96,12 @@ public class BoardInsertController extends HttpServlet{
 			vo.setCategoryNo(category);
 			vo.setWriterNo(writerNo);
 			
+			System.out.println("attVoList : " + attVoList);
+			
 //			서비스 호출
 			BoardService bs = new BoardService();
 			int result = bs.insert(vo, attVoList);
+			System.out.println("result : " + result);
 	
 			
 //			결과

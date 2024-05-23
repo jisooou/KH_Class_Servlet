@@ -8,12 +8,15 @@ import static com.kh.app.db.JDBCTemplate.rollback;
 import java.sql.Connection;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+
 import com.kh.app.board.dao.BoardDao;
 import com.kh.app.board.vo.AttachmentVo;
 import com.kh.app.board.vo.BoardVo;
 import com.kh.app.board.vo.CategoryVo;
 import com.kh.app.board.vo.PageVo;
 import com.kh.app.db.JDBCTemplate;
+import static com.kh.app.db.SqlSessionTemplate.getSqlSession;
 
 
 public class BoardService {
@@ -28,6 +31,7 @@ public class BoardService {
 	
 	
 	public int insert(BoardVo vo, List<AttachmentVo> attVoList) throws Exception{
+		System.out.println("service called...");
 //		비즈니스로직
 		if(vo.getTitle().contains("ㅆ")) {
 			throw new Exception("욕하지 마세요-제목");
@@ -40,20 +44,22 @@ public class BoardService {
 		
 //		DAO 호출
 	
-		Connection conn = JDBCTemplate.getConnection();
-		int result = dao.insert(conn, vo);
+		SqlSession ss = getSqlSession();
+		int result = dao.insert(ss, vo);
+		System.out.println("dao result : " + result);
 		
 		int attResult = 1;
 		if(attVoList.size() > 0) {
-			attResult = dao.insertBoardAttachment(conn, attVoList);
+			attResult = dao.insertBoardAttachment(ss, attVoList);
+			System.out.println("attResult : " + attResult);
 		}
 		
-		if(result * attResult > 1) {
-			JDBCTemplate.commit(conn);
+		if(result * attResult >= 1) {
+			ss.commit();
 		}else {
-			JDBCTemplate.rollback(conn);
+			ss.rollback();
 		}
-		JDBCTemplate.close(conn);
+		ss.close();
 		
 		return result * attResult;
 	}
@@ -202,6 +208,21 @@ public class BoardService {
 		close(conn);
 		
 		return attVoList; 
+	}
+	
+	
+	public int delete(String[] noArr) throws Exception{
+		SqlSession ss = getSqlSession();
+		int result = dao.delete(ss,noArr);
+		
+		if(result > 0) {
+			ss.commit();
+		}else {
+			ss.rollback();
+		}
+		ss.close();
+		
+		return result;
 	}
 
 }
