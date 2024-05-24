@@ -1,0 +1,627 @@
+/* header */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  line-height: 1.6;
+}
+
+header{
+  border-bottom: 1px solid rgb(221, 221, 221);
+  height: 50px;
+  padding-left: 25px;
+  padding-top: 25px;
+
+  display: flex;
+  justify-content: space-between;
+  padding: 30px 70px;
+
+  /* 추가한 부분 */
+  position: fixed; 
+  top: 0; 
+  width: 95%;
+  background-color: white; 
+  z-index: 4; 
+}
+
+#img-logo{
+  width: 110px;
+  height: 60px;
+}
+
+.header-right{
+  display: flex;
+}
+
+#introduce{
+  padding: 20px 30px;
+  font-weight:bolder;
+}
+
+#profile-icon{
+  border: 1px solid #DDDDDD;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  /* 테두리 안 */
+  padding: 0 15px 0 15px;
+  /* 테두리 밖 */
+  margin-right: 70px;
+}
+
+#menu-icon{
+  padding: 0 8px;
+}
+
+#user-icon{
+  padding: 0 0 0 8px;
+}
+/* --------------------------- */
+
+
+/* -------------계정 창 띄우기-------------*/
+.account-content{
+  display: none;
+  position: absolute;
+  top: 80px;
+  /* profile-icon에 margin-right랑 같이 움직여야 함. */
+  right: 80px;
+  background-color: white;
+  box-shadow: 0 3px 5px #DDDDDD;
+  /* 높이 설정할 때 z-index 필요할수도 */
+  /* z-index: 2000; */
+  border: 1px solid rgb(218, 217, 217);
+  border-radius: 20px;
+  padding: 10px;
+  width: 270px;
+}
+.account-content button:first-child{
+  font-weight: bolder
+}
+.account-content button {
+  background: none;
+  border: none;
+  width: 100%;
+  padding: 8px 20px;
+  text-align: left;
+  cursor: pointer;
+  font-size: medium;
+}
+.account-content button:hover {
+  background-color: #f1f1f1;
+}
+.account-content.show{
+  display: block;
+}
+/* ----------------------------------*/
+
+/* -------------회원가입 창 띄우기-------------*/
+.join-content{
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 6;
+}
+.join-content.show{
+  display: flex;
+}
+.join-box {
+  background-color: white;
+  border: 1px solid black;
+  height: 80%;
+  margin-top: 7%;
+  width: 30%;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
+  text-align: left;
+  padding-left: 2%;
+  padding-right: 2%;
+  padding-bottom: 2%;
+  z-index: 7;
+  /* 내용 찰 경우, 스크롤 내려지게 하기  */
+  overflow-y: auto;
+}
+.checkbox-container{
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+}
+.join-submit-button{
+  width: 100%;
+  height: 10%;
+  background-color: rgb(248, 75, 104);
+  border: 1px solid gray;
+  border-radius: 30px;
+  font-size: larger;
+  font-weight: bold;
+}
+/* ----------------------------------*/
+
+/* -------------로그인 창 띄우기-------------*/
+.login-content{
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 6;
+}
+.login-content.show{
+  display: flex;
+}
+.login-box {
+  background-color: white;
+  border: 1px solid black;
+  height: 50%;
+  margin-top: 7%;
+  width: 30%;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.35);
+  text-align: left;
+  padding-left: 2%;
+  padding-right: 2%;
+  padding-bottom: 2%;
+  z-index: 7;
+  /* 내용 찰 경우, 스크롤 내려지게 하기  */
+  /* overflow-y: auto; */
+}
+#login-id{
+  width: 99%;
+  height: 10%;
+  border-radius: 20px;
+}
+#login-password{
+  width: 99%;
+  height: 10%;
+  border-radius: 20px;
+}
+.login-submit-button{
+  width: 100%;
+  height: 15%;
+  background-color: rgb(248, 75, 104);
+  border: 1px solid gray;
+  border-radius: 30px;
+  font-size: larger;
+  font-weight: bold;
+}
+.show-password{
+  border: none;
+  background-color: transparent;
+}
+/* ----------------------------------*/
+
+nav{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px;
+  background-color: #fff;
+  /* !!!!!!!!!!!!!!!!!!! */
+  position: fixed;
+  /* 위 공간 조정 */
+  top: 110px; 
+  width: 100%;
+  z-index: 3;
+}
+
+.search{
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  border-radius: 40px;
+  box-shadow: 0 3px 10px 0 #ddd, 0 1px 5px 0 #ddd;
+  background-color: white;
+  padding: 10px;
+  width: 800px;
+  height: 50px;
+}
+
+.search-item {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  padding: 0 20px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.search-item span:first-child {
+  font-weight: bold;
+}
+
+.divider {
+  border-left: 1px solid #ddd;
+  height: 40px;
+}
+
+.search-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  padding-left: 10%;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.search-icon img {
+  width: 40px;
+  height: 40px;
+}
+
+.search button{
+  border: none;
+  background-color: transparent;
+  margin-left: 30px; 
+  margin-right: 30px; 
+}
+
+/* -------------여행지 검색창 띄우기-------------*/
+.search-place{
+  display: none;
+  position: absolute;
+  top: 120px;
+  left: 560px;
+  background-color: white;
+  /* 높이 설정할 때 z-index 필요할수도 */
+  z-index: 4;
+  border: 1px solid #DDDDDD;
+  border-radius: 40px;
+  padding: 20px;
+  width: 25%;
+  height: auto;
+}
+.search-place img{
+  width: 60px;
+  /* margin: auto; */
+  display: block;
+  margin: 0 auto;
+}
+.search-place-button{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align:left;
+  cursor: pointer;
+}
+.search-place-button span{
+  font-size: small;
+  margin-top: 10px;
+}
+.search-place button {
+  background-color: none;
+  padding: 8px 20px;
+  cursor: pointer;
+  font-size: medium;
+}
+.search-place-button:hover{
+  background-color: #f1f1f1;
+  border-radius: 20%;
+}
+.search-place-button img{
+  border: 1px solid #878686;
+  padding: 10px;
+  border-radius: 30%;
+}
+.search-place.show{
+  display: block;
+}
+
+/* 지역이름 */
+.search-place-letter{
+  margin-left: 8%;
+  font-weight:bolder
+}
+.search-place-name{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-right: 10%;
+}
+.search-place-name button{
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  padding: 10px 10px;
+  cursor: pointer;
+  font-size: medium;
+  margin-bottom: 10px;
+  width: 100%;
+  height: 100%;
+}
+.search-place-name button:hover{
+  background-color: #f1f1f1;
+}
+/* ----------------------------------*/
+
+/* 여행자 검색창 띄우기 */
+.traveler{
+  display: none;
+}
+.traveler.show{
+  display: block;
+}
+
+/* ----------------------------------*/
+
+/* #line{
+    border-top: 1px solid #DDDDDD;
+} */
+
+section{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -10px;
+}
+
+.theme{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 30px;
+  background-color: white;
+  /* 테마 밑에 선 */
+  box-shadow: 0 8px 4px -7px none;
+  /* !!!!!!!!!!!!!!!! */
+  position: fixed;
+  /* !!!!!!!!!위 공간 조정 */
+  top: 210px; 
+  width: 100%;
+  z-index: 2;
+}
+
+.theme img{
+  width: 50px;
+  height: 40px;
+}
+
+#theme-detail{
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  margin-left: 50px; 
+  margin-right: -20px; 
+  /* 테마 사진 간격 조절 */
+  width: 90px;
+  cursor: pointer;
+}
+
+#theme-detail:hover{
+  border-bottom: 2px solid rgb(212, 210, 210);
+}
+
+#theme-name{
+  font-size: smaller;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 20px; 
+  padding: 50px 30px; 
+}
+
+.image-container {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+  /* 위 공간 조정 */
+  margin-top: 15%; 
+  padding: 20px;
+}
+
+.image-container img {
+  width: 280px;
+  height: 240px;
+  border-radius: 8px; 
+}
+
+/* 부모에 relative */
+.accomodation{
+  position: relative;
+  /* nav와 theme에서 z-index를 얼마나 줬는지 확인하기. */
+  z-index: 1;
+}
+
+/* 찜 하트  */
+.heart-icon{
+  /* 자식에 absolute */
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+.heart-icon img{
+  width: 25px;
+  height: 25px;
+}
+.heart-icon .heart-empty{
+  display: block;
+}
+.heart-icon .heart-filled{
+  display: none;
+}
+.heart-icon.liked .heart-empty{
+  display: none;
+}
+.heart-icon.liked .heart-filled{
+  display: block;
+}
+/* ------------- */
+
+#place-score{
+  display: flex;
+  justify-content: right;
+  margin-top: -18px;
+}
+
+#place{
+  font-size: 14px;
+  color: #878686;
+}
+
+#place-date{
+  font-weight: 600;
+  margin-top: 15px;
+}
+
+/* ---------footer--------- */
+.footer {
+  background-color: #f7f7f7;
+  padding: 20px;
+  border-top: 1px solid #e9e7e7;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.footer-column {
+  margin: 20px;
+}
+
+.footer-column h4 {
+  font-weight: bold;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.footer-column ul li {
+  margin-bottom: 10px;
+}
+
+.footer-column ul li a{
+  text-decoration: none; 
+  color: inherit; 
+}
+
+.footer-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-top: 1px solid #e7e7e7;
+  padding-top: 10px;
+}
+
+.footer-bottom span {
+  margin-bottom: 10px;
+}
+
+.footer-link{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer-bottom a {
+  margin: 10px;
+  color: #555;
+  text-decoration: none;
+}
+
+.footer-language {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 30px;
+}
+
+.footer-language span {
+  margin-left: 15px;
+  color: #555;
+}
+
+.footer-sns {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 30px;
+  cursor: pointer;
+}
+
+.footer-sns img {
+  width: 24px;
+  height: 24px;
+  margin: 0 10px;
+}
+/* ---------------------- */
+
+
+
+
+
+/* ------------- Calendar Modal ------------- */
+/* Calendar Modal */
+.calendar-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+}
+
+.calendar-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 600px;
+}
+
+.calendar-header, .calendar-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.calendar-body {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+}
+
+.calendar-day {
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.calendar-day:hover {
+  background-color: #f1f1f1;
+}
+
+/* ---------------------------- */

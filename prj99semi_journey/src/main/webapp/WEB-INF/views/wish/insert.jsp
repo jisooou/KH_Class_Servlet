@@ -10,16 +10,41 @@
         <title>여행의 정석</title>
     
     	<link rel="stylesheet" href="http://127.0.0.1:8888/journey/resources/css/wish.css">
-        <!-- <link rel="stylesheet" href="./wishlist.css"> -->
+        
+        <!-- !!!!!!!!!!!!!GPT-AJAX!!!!!!!!!!!!! -->
+        <script>
+	        function clickHeart(element) {
+	            var roomNo = element.getAttribute('room_no');
+	
+	            var xhr = new XMLHttpRequest();
+	            xhr.open('POST', '/journey/wish/insert', true);
+	            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+	            xhr.onreadystatechange = function () {
+	                if (xhr.readyState === XMLHttpRequest.DONE) {
+	                    if (xhr.status === 200) {
+	                        alert('위시리스트에 등록되었습니다.');
+	                        element.querySelector('.heart-empty').style.display = 'none';
+	                        element.querySelector('.heart-filled').style.display = 'inline';
+	                    } else if (xhr.status === 401) {
+	                        alert('로그인이 필요합니다.');
+	                    } else {
+	                        alert('위시리스트 등록 중 오류가 발생했습니다. ' + xhr.responseText);
+	                    }
+	                }
+	            };
+	            xhr.send('roomNo=' + encodeURIComponent(roomNo));
+	        }
+    	</script>
+    	
     </head>
     <body>
         <header>
-            <img id="img-logo" src="./image/airbnb.png" alt="">
+            <img id="img-logo" src="../resources/image/airbnb.png" alt="">
             <div class="header-right">
                 <div id="introduce">당신의 공간을 여정하세요</div>
                 <div id="profile-icon" onclick="showAccountContent()">
-                    <img id="menu-icon" width="16" src="./image/menu.svg" alt="메뉴 아이콘">
-                    <img id="user-icon" width="30" src="./image/profile.svg" alt="유저 아이콘">
+                    <img id="menu-icon" width="16" src="../resources/image/menu.svg" alt="메뉴 아이콘">
+                    <img id="user-icon" width="30" src="../resources/image/profile.svg" alt="유저 아이콘">
                 </div>
             </div>
         </header>
@@ -29,14 +54,42 @@
             위시리스트
           </div>
         </section>
+        
+        <%-- <%-- 
+        <!--  아래 main부분 객실컨트롤러 만들면 아래 코드로 사용하기
+        <div class="main">
+	      <div class="image-container">
+	        <c:choose>
+	            <c:when test="${not empty voList}">
+	                <c:forEach var="wish" items="${voList}">
+	                    <div class="accomodation">
+	                        <img src="${wish.imageUrl}" alt="숙소 사진">
+	                        <div class="heart-icon" room_no="${wish.roomNo}" onclick="clickHeart(this)">
+	                            <img class="heart-empty" src="../resources/image/emptyheart.svg" alt="빈 찜 하트">
+	                            <img class="heart-filled" src="../resources/image/pinkheart.png" alt="찜 하트">
+	                        </div>
+	                        <div id="place-name">${wish.roomName}</div>
+	                        <div id="place-score">★ ${wish.grade}</div>
+	                        <div id="place">${wish.location}</div>
+	                        <div id="place-date">${wish.price} / 박</div>
+	                    </div>
+	                </c:forEach>
+	            </c:when>
+	            <c:otherwise>
+	                <p>위시리스트에 등록된 항목이 없습니다.</p>
+	            </c:otherwise>
+	        </c:choose>
+	      </div>
+	    </div>
+	    --%>
     
         <div class="main">
           <div class="image-container">
             <div class="accomodation">
                 <img src="https://cdn.travelview.co.kr/travelview/2021/01/21020223/post_41596968_30400772_4.jpg" alt="숙소 사진">
-                <div class="heart-icon" onclick="clickHeart(this)">
-                    <img class="heart-empty" src="./image/emptyheart.svg" alt="빈 찜 하트">
-                    <img class="heart-filled" src="./image/pinkheart.png" alt="찜 하트">
+                <div class="heart-icon" room_no="1" onclick="clickHeart(this)">
+                    <img class="heart-empty" src="../resources/image/emptyheart.svg" alt="빈 찜 하트">
+                    <img class="heart-filled" src="../resources/image/pinkheart.png" alt="찜 하트">
                 </div>
                 <div id="place-name">한국 애월읍, 제주시</div>
                 <div id="place-score">★ 4.79</div>
@@ -45,9 +98,9 @@
             </div>
             <div class="accomodation">
                 <img src="https://ppss.kr/wp-content/uploads/2023/06/1-1-2.jpeg" alt="숙소 사진">
-                <div class="heart-icon" onclick="clickHeart(this)">
-                  <img class="heart-empty" src="./image/emptyheart.svg" alt="빈 찜 하트">
-                  <img class="heart-filled" src="./image/pinkheart.png" alt="찜 하트">
+                <div class="heart-icon" room_no="2" onclick="clickHeart(this)">
+                  <img class="heart-empty" src="../resources/image/emptyheart.svg" alt="빈 찜 하트">
+                  <img class="heart-filled" src="../resources/image/pinkheart.png" alt="찜 하트">
                 </div>
                 <div id="place-name">한국 애월읍, 제주시</div>
                 <div id="place-score">★ 4.79</div>
@@ -56,9 +109,9 @@
             </div>
             <div class="accomodation">
                 <img src="https://digitalchosun.dizzo.com/site/data/img_dir/2020/07/06/2020070680034_2.jpg" alt="숙소 사진">
-                <div class="heart-icon" onclick="clickHeart(this)">
-                  <img class="heart-empty" src="./image/emptyheart.svg" alt="빈 찜 하트">
-                  <img class="heart-filled" src="./image/pinkheart.png" alt="찜 하트">
+                <div class="heart-icon" room_no="3" onclick="clickHeart(this)">
+                  <img class="heart-empty" src="../resources/image/emptyheart.svg" alt="빈 찜 하트">
+                  <img class="heart-filled" src="../resources/image/pinkheart.png" alt="찜 하트">
                 </div>
                 <div id="place-name">한국 애월읍, 제주시</div>
                 <div id="place-score">★ 4.79</div>
@@ -67,9 +120,9 @@
             </div>
             <div class="accomodation">
                 <img src="https://static.wixstatic.com/media/66a42d_330ccf54067345bc8bcb525b1a05156a~mv2.jpg/v1/fill/w_602,h_480,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/GFXS8145-Pano.jpg" alt="숙소 사진">
-                <div class="heart-icon" onclick="clickHeart(this)">
-                  <img class="heart-empty" src="./image/emptyheart.svg" alt="빈 찜 하트">
-                  <img class="heart-filled" src="./image/pinkheart.png" alt="찜 하트">
+                <div class="heart-icon" room_no="4" onclick="clickHeart(this)">
+                  <img class="heart-empty" src="../resources/image/emptyheart.svg" alt="빈 찜 하트">
+                  <img class="heart-filled" src="../resources/image/pinkheart.png" alt="찜 하트">
                 </div>
                 <div id="place-name">한국 애월읍, 제주시</div>
                 <div id="place-score">★ 4.79</div>
@@ -78,9 +131,9 @@
             </div>
             <div class="accomodation">
                 <img src="https://mblogthumb-phinf.pstatic.net/MjAyMTA5MDZfMTIg/MDAxNjMwOTI3NjY3OTAx.Pvai0H6Gd37tT4sTp12Nz8gDK6skinSIv5_UcRvu7KEg.P5SD62MQP5UlbbEEnwp59_qx3jrkng3FqkYlVtreFNEg.JPEG.so_hee510/IMG_4458.jpg?type=w800" alt="숙소 사진">
-                <div class="heart-icon" onclick="clickHeart(this)">
-                  <img class="heart-empty" src="./image/emptyheart.svg" alt="빈 찜 하트">
-                  <img class="heart-filled" src="./image/pinkheart.png" alt="찜 하트">
+                <div class="heart-icon" room_no="5" onclick="clickHeart(this)">
+                  <img class="heart-empty" src="../resources/image/emptyheart.svg" alt="빈 찜 하트">
+                  <img class="heart-filled" src="../resources/image/pinkheart.png" alt="찜 하트">
                 </div>
                 <div id="place-name">한국 애월읍, 제주시</div>
                 <div id="place-score">★ 4.79</div>
@@ -89,9 +142,9 @@
             </div>
             <div class="accomodation">
                 <img src="https://a.cdn-hotels.com/gdcs/production97/d585/64d53349-591e-46f8-af08-d9dc0649ea1a.jpg" alt="숙소 사진">
-                <div class="heart-icon" onclick="clickHeart(this)">
-                  <img class="heart-empty" src="./image/emptyheart.svg" alt="빈 찜 하트">
-                  <img class="heart-filled" src="./image/pinkheart.png" alt="찜 하트">
+                <div class="heart-icon" room_no="6" onclick="clickHeart(this)">
+                  <img class="heart-empty" src="../resources/image/emptyheart.svg" alt="빈 찜 하트">
+                  <img class="heart-filled" src="../resources/image/pinkheart.png" alt="찜 하트">
                 </div>
                 <div id="place-name">한국 애월읍, 제주시</div>
                 <div id="place-score">★ 4.79</div>
@@ -100,9 +153,9 @@
             </div>
             <div class="accomodation">
                 <img src="https://yaimg.yanolja.com/v5/2021/12/27/11/1280/61c9a852b80a75.50854466.jpg" alt="숙소 사진">
-                <div class="heart-icon" onclick="clickHeart(this)">
-                  <img class="heart-empty" src="./image/emptyheart.svg" alt="빈 찜 하트">
-                  <img class="heart-filled" src="./image/pinkheart.png" alt="찜 하트">
+                <div class="heart-icon" room_no="7" onclick="clickHeart(this)">
+                  <img class="heart-empty" src="../resources/image/emptyheart.svg" alt="빈 찜 하트">
+                  <img class="heart-filled" src="../resources/image/pinkheart.png" alt="찜 하트">
                 </div>
                 <div id="place-name">한국 애월읍, 제주시</div>
                 <div id="place-score">★ 4.79</div>
@@ -111,9 +164,9 @@
             </div>
             <div class="accomodation">
                 <img src="https://image6.yanolja.com/makers/SK4JH2imjjw7wIpn" alt="숙소 사진">
-                <div class="heart-icon" onclick="clickHeart(this)">
-                  <img class="heart-empty" src="./image/emptyheart.svg" alt="빈 찜 하트">
-                  <img class="heart-filled" src="./image/pinkheart.png" alt="찜 하트">
+                <div class="heart-icon" room_no="8" onclick="clickHeart(this)">
+                  <img class="heart-empty" src="../resources/image/emptyheart.svg" alt="빈 찜 하트">
+                  <img class="heart-filled" src="../resources/image/pinkheart.png" alt="찜 하트">
                 </div>
                 <div id="place-name">한국 애월읍, 제주시</div>
                 <div id="place-score">★ 4.79</div>
@@ -122,9 +175,9 @@
             </div>
             <div class="accomodation">
                 <img src="https://d3edy9y3v7d67c.cloudfront.net/rooms/10764/images/960/i87122.jpg" alt="숙소 사진">
-                <div class="heart-icon" onclick="clickHeart(this)">
-                  <img class="heart-empty" src="./image/emptyheart.svg" alt="빈 찜 하트">
-                  <img class="heart-filled" src="./image/pinkheart.png" alt="찜 하트">
+                <div class="heart-icon" room_no="9" onclick="clickHeart(this)">
+                  <img class="heart-empty" src="../resources/image/emptyheart.svg" alt="빈 찜 하트">
+                  <img class="heart-filled" src="../resources/image/pinkheart.png" alt="찜 하트">
                 </div>
                 <div id="place-name">한국 애월읍, 제주시</div>
                 <div id="place-score">★ 4.79</div>
@@ -133,9 +186,9 @@
             </div>
             <div class="accomodation">
                 <img src="https://a0.muscache.com/im/pictures/57a113aa-57a6-4a54-b0ec-1c4e6ef70164.jpg?im_w=1920" alt="숙소 사진">
-                <div class="heart-icon" onclick="clickHeart(this)">
-                  <img class="heart-empty" src="./image/emptyheart.svg" alt="빈 찜 하트">
-                  <img class="heart-filled" src="./image/pinkheart.png" alt="찜 하트">
+                <div class="heart-icon" room_no="10" onclick="clickHeart(this)">
+                  <img class="heart-empty" src="../resources/image/emptyheart.svg" alt="빈 찜 하트">
+                  <img class="heart-filled" src="../resources/image/pinkheart.png" alt="찜 하트">
                 </div>
                 <div id="place-name">한국 애월읍, 제주시</div>
                 <div id="place-score">★ 4.79</div>
@@ -144,9 +197,9 @@
             </div>
             <div class="accomodation">
                 <img src="https://cdn.onews.tv/news/photo/202403/201148_242757_5858.jpeg" alt="숙소 사진">
-                <div class="heart-icon" onclick="clickHeart(this)">
-                  <img class="heart-empty" src="./image/emptyheart.svg" alt="빈 찜 하트">
-                  <img class="heart-filled" src="./image/pinkheart.png" alt="찜 하트">
+                <div class="heart-icon" room_no="11" onclick="clickHeart(this)">
+                  <img class="heart-empty" src="../resources/image/emptyheart.svg" alt="빈 찜 하트">
+                  <img class="heart-filled" src="../resources/image/pinkheart.png" alt="찜 하트">
                 </div>
                 <div id="place-name">한국 애월읍, 제주시</div>
                 <div id="place-score">★ 4.79</div>
@@ -155,9 +208,9 @@
             </div>
             <div class="accomodation">
                 <img src="https://a0.muscache.com/im/pictures/miso/Hosting-33759190/original/bd1f00ce-741f-4e34-9dca-1b05e6df65ce.jpeg?im_w=720" alt="숙소 사진">
-                <div class="heart-icon" onclick="clickHeart(this)">
-                  <img class="heart-empty" src="./image/emptyheart.svg" alt="빈 찜 하트">
-                  <img class="heart-filled" src="./image/pinkheart.png" alt="찜 하트">
+                <div class="heart-icon" room_no="12" onclick="clickHeart(this)">
+                  <img class="heart-empty" src="../resources/image/emptyheart.svg" alt="빈 찜 하트">
+                  <img class="heart-filled" src="../resources/image/pinkheart.png" alt="찜 하트">
                 </div>
                 <div id="place-name">한국 애월읍, 제주시</div>
                 <div id="place-score">★ 4.79</div>
@@ -166,9 +219,9 @@
             </div>
             <div class="accomodation">
                 <img src="https://image.ohou.se/i/bucketplace-v2-development/uploads/cards/advices/167238542406438811.jpeg?w=960&h=960&c=c" alt="숙소 사진">
-                <div class="heart-icon" onclick="clickHeart(this)">
-                  <img class="heart-empty" src="./image/emptyheart.svg" alt="빈 찜 하트">
-                  <img class="heart-filled" src="./image/pinkheart.png" alt="찜 하트">
+                <div class="heart-icon" room_no="13" onclick="clickHeart(this)">
+                  <img class="heart-empty" src="../resources/image/emptyheart.svg" alt="빈 찜 하트">
+                  <img class="heart-filled" src="../resources/image/pinkheart.png" alt="찜 하트">
                 </div>
                 <div id="place-name">한국 애월읍, 제주시</div>
                 <div id="place-score">★ 4.79</div>
@@ -220,10 +273,10 @@
             <span>₩ KRW</span>
           </div>
           <div class="footer-sns">
-            <img src="./image//facebook.png" alt="facebook">
-            <img src="./image/twitter.png" alt="twitter">
-            <img src="./image/instagram.png" alt="instagram">
-            <img src="./image/blog.png" alt="blog">
+            <img src="../resources/image//facebook.png" alt="facebook">
+            <img src="../resources/image/twitter.png" alt="twitter">
+            <img src="../resources/image/instagram.png" alt="instagram">
+            <img src="../resources/image/blog.png" alt="blog">
           </div>
           <div class="footer-bottom">
             <span>© 2024 여정, Inc.</span>
