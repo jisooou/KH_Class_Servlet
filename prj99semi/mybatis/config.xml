@@ -16,5 +16,7 @@
   </environments>
   <mappers>
 	<mapper resource="/mapper/board-mapper.xml"/>
+	<mapper resource="/mapper/board-reply-mapper.xml"/>
+	<mapper resource="/mapper/notice-mapper.xml"/>
   </mappers>
 </configuration>

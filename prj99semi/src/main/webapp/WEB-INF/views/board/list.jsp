@@ -11,10 +11,12 @@
 <meta charset="UTF-8">
 <title>KH홈페이지</title>
 
+<script defer src="/app/resources/js/notice/list.js"></script>
+<script defer src="/app/resources/js/board/list.js"></script>
+
 <%@ include file="/WEB-INF/views/layout/util.jsp" %>
 
 <link rel="stylesheet" href="/app/resources/css/board/list.css">
-<script src="/app/resources/js/board/list.js"></script>
 
 </head>
 <body>
