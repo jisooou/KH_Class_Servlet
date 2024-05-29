@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.kh.journey.accom.vo.AccomVo;
 import com.kh.journey.wish.vo.WishVo;
 
 public class WishDao {
@@ -30,25 +31,42 @@ public class WishDao {
 
 	public List<WishVo> selectWishList(Connection conn, String memberNo) throws Exception{
 		
-		String sql = "SELECT * FROM WISH_LIST WHERE MEM_NO = ?";
+//		SQL
+		String sql = "SELECT W.NO , W.MEM_NO , W.ROOM_NO , R.GRADE , R.NAME , A.ADDRESS , A.IMG_URL , R.WEEKDAY_PRICE , R.WEEKEND_PRICE FROM WISH_LIST W JOIN ROOM R ON W.ROOM_NO = R.NO JOIN ACCOMMODATION A ON R.ACCOM_NO = A.NO WHERE W.MEM_NO = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, memberNo);
         ResultSet rs = pstmt.executeQuery();
 
-        List<WishVo> wishList = new ArrayList<>();
+        List<WishVo> wishList = new ArrayList<WishVo>();
         while (rs.next()) {
-            WishVo wish = new WishVo();
-            wish.setNo(rs.getString("NO"));
-            wish.setMemNo(rs.getString("MEM_NO"));
-            wish.setRoomNo(rs.getString("ROOM_NO"));
-            wishList.add(wish);
+        	String no = rs.getString("NO");
+        	String memNo = rs.getString("MEM_NO");
+        	String roomNo = rs.getString("ROOM_NO");
+        	String grade = rs.getString("GRADE");
+        	String roomName = rs.getString("NAME");
+        	String accomAddress = rs.getString("ADDRESS");
+        	String accomImgUrl = rs.getString("IMG_URL");
+        	String roomWeekdayPrice = rs.getString("WEEKDAY_PRICE");
+        	String roomWeekendPrice = rs.getString("WEEKEND_PRICE");
+        	
+            WishVo vo = new WishVo();
+			vo.setNo(no);
+			vo.setMemNo(memNo);
+			vo.setRoomNo(roomNo);
+			vo.setGrade(grade);
+			vo.setRoomName(roomName);
+			vo.setAccomAddress(accomAddress);
+			vo.setAccomImgUrl(accomImgUrl);
+			vo.setRoomWeekdayPrice(roomWeekdayPrice);
+			vo.setRoomWeekendPrice(roomWeekendPrice);
+
+			wishList.add(vo);
         }
 
         close(rs);
         close(pstmt);
 
         return wishList;
-		
 	}
 
 
@@ -65,7 +83,5 @@ public class WishDao {
         
         return result;
     }
-
-
 
 }
